@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Book a procurement slot</h1>
+<p>Choose an available date and time window at the procurement centre.</p>
+
+<div class="slot-list">
+  {% for slot in slots %}
+    {% set full = slot['booked_count'] >= slot['capacity'] %}
+    <form method="POST" action="{{ url_for('book_slot') }}">
+      <input type="hidden" name="slot_id" value="{{ slot['id'] }}">
+      <div class="slot-option {% if full %}full{% endif %}">
+        <div>
+          <div class="when">{{ slot['slot_date'] }} · {{ slot['start_time'] }} – {{ slot['end_time'] }}</div>
+          <div class="cap">{{ slot['booked_count'] }} / {{ slot['capacity'] }} farmers booked</div>
+        </div>
+        <button class="btn btn-gold btn-small" type="submit" {% if full %}disabled{% endif %}>
+          {% if full %}Full{% else %}Book this slot{% endif %}
+        </button>
+      </div>
+    </form>
+  {% else %}
+    <p class="empty-state">No slots available right now — please check back soon.</p>
+  {% endfor %}
+</div>
+{% endblock %}

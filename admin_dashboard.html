@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Procurement centre — today's queue</h1>
+
+<div class="slot-tabs">
+  {% for s in slots_today %}
+    <a class="slot-tab {% if s['id'] == selected_slot_id %}active{% endif %}"
+       href="{{ url_for('admin_dashboard', slot_id=s['id']) }}">
+      {{ s['start_time'] }}–{{ s['end_time'] }}
+    </a>
+  {% else %}
+    <span class="empty-state">No slots configured for today.</span>
+  {% endfor %}
+</div>
+
+{% if selected_slot_id %}
+<form method="POST" action="{{ url_for('admin_call_next', slot_id=selected_slot_id) }}" style="margin-bottom:20px;">
+  <button class="btn btn-primary" type="submit">Call next token</button>
+</form>
+
+<div class="panel">
+  <table class="queue-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Farmer</th>
+        <th>Village</th>
+        <th>Crop</th>
+        <th>Qty (KG)</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr class="row-{{ b['status'] }}">
+        <td class="mono">{{ b['token_number'] }}</td>
+        <td>{{ b['name'] }}<br><span class="cap">{{ b['mobile'] }}</span></td>
+        <td>{{ b['village'] }}</td>
+        <td>{{ b['crop'] }}</td>
+        <td>{{ b['quantity'] }}</td>
+        <td><span class="pill pill-{{ b['status'] }}">{{ b['status']|capitalize }}</span></td>
+        <td>
+          {% if b['status'] == 'serving' and not b['procurement_id'] %}
+            <form class="inline-form" method="POST" action="{{ url_for('admin_accept', booking_id=b['id']) }}">
+              <input type="number" name="quantity" value="{{ b['quantity'] }}" step="0.1" min="0" title="Accepted quantity (KG)">
+              <input type="number" name="rate" value="20" step="0.5" min="0" title="Rate per KG">
+              <button class="btn btn-gold btn-small" type="submit">Accept &amp; procure</button>
+            </form>
+          {% elif b['procurement_id'] and b['payment_status'] == 'processing' %}
+            <form class="inline-form" method="POST" action="{{ url_for('admin_complete_payment', payment_id=b['payment_id']) }}">
+              <input type="hidden" name="slot_id" value="{{ selected_slot_id }}">
+              <button class="btn btn-primary btn-small" type="submit">Mark payment Rs.{{ b['payment_amount'] }} complete</button>
+            </form>
+          {% elif b['payment_status'] == 'completed' %}
+            <span class="pill pill-completed">Paid</span>
+          {% else %}
+            <span class="empty-state">—</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="empty-state">No bookings in this slot yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

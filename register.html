@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Register as a farmer</h1>
+<p>You'll get a unique Registration ID to log in with next time.</p>
+
+<form class="form-card" method="POST" action="{{ url_for('register') }}">
+  <div class="field">
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div class="field">
+    <label for="mobile">Mobile number</label>
+    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" maxlength="10" required>
+  </div>
+  <div class="field">
+    <label for="aadhaar">Aadhaar number</label>
+    <input type="text" id="aadhaar" name="aadhaar" pattern="[0-9]{12}" maxlength="12" required>
+  </div>
+  <div class="field">
+    <label for="village">Village</label>
+    <input type="text" id="village" name="village" required>
+  </div>
+  <div class="field">
+    <label for="crop">Crop</label>
+    <input type="text" id="crop" name="crop" placeholder="e.g. Paddy, Wheat, Cotton" required>
+  </div>
+  <div class="field">
+    <label for="quantity">Quantity to sell (KG)</label>
+    <input type="number" id="quantity" name="quantity" min="1" step="0.1" required>
+  </div>
+  <button class="btn btn-primary" type="submit">Create account</button>
+  <div class="form-foot">Already registered? <a href="{{ url_for('login') }}">Log in instead</a>.</div>
+</form>
+{% endblock %}

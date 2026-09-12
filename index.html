@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Know when to come. Skip the wait.</h1>
+  <p class="lede">eProcuration lets farmers register their crop, book a procurement slot, and track a live token queue from home — so they arrive at the centre exactly when they're needed, not hours early.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="{{ url_for('register') }}">Register as a farmer</a>
+    <a class="btn btn-outline" href="{{ url_for('login') }}">I'm already registered</a>
+  </div>
+</section>
+
+<section>
+  <h2>What the platform does</h2>
+  <div class="feature-grid">
+    <div class="feature">
+      <h3>Slot booking</h3>
+      <p>Choose a procurement date and time window instead of showing up and hoping.</p>
+    </div>
+    <div class="feature">
+      <h3>Live queue tracking</h3>
+      <p>See your token, who's currently being served, and how many farmers are ahead of you.</p>
+    </div>
+    <div class="feature">
+      <h3>Procurement tracking</h3>
+      <p>Confirmation of crop, quantity, and acceptance status the moment it's recorded.</p>
+    </div>
+    <div class="feature">
+      <h3>Payment tracking</h3>
+      <p>Watch payment move from processing to completed, with amount and reference number.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>How it works</h2>
+  <div class="journey">
+    <div class="journey-step">
+      <span class="journey-num">01</span>
+      <div class="journey-text"><strong>Register</strong><span>Name, mobile, Aadhaar, village and crop details — takes under a minute.</span></div>
+    </div>
+    <div class="journey-step">
+      <span class="journey-num">02</span>
+      <div class="journey-text"><strong>Book a slot</strong><span>Pick a date and time window at the procurement centre.</span></div>
+    </div>
+    <div class="journey-step">
+      <span class="journey-num">03</span>
+      <div class="journey-text"><strong>Get a token</strong><span>A unique token number marks your place in that slot's queue.</span></div>
+    </div>
+    <div class="journey-step">
+      <span class="journey-num">04</span>
+      <div class="journey-text"><strong>Track the live queue</strong><span>Check the dashboard to see the current token and your estimated wait.</span></div>
+    </div>
+    <div class="journey-step">
+      <span class="journey-num">05</span>
+      <div class="journey-text"><strong>Arrive at the right time</strong><span>No more standing in line for hours before your turn.</span></div>
+    </div>
+    <div class="journey-step">
+      <span class="journey-num">06</span>
+      <div class="journey-text"><strong>Crop procurement</strong><span>Centre staff record the crop and quantity accepted.</span></div>
+    </div>
+    <div class="journey-step">
+      <span class="journey-num">07</span>
+      <div class="journey-text"><strong>Track payment</strong><span>Follow payment status from processing through to completed.</span></div>
+    </div>
+  </div>
+</section>
+{% endblock %}
